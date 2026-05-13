@@ -24,6 +24,19 @@ function displayMeals(meals) {
 
     div.classList.add("meal-card");
 
+    div.addEventListener("click", () => {
+
+  saveLastMeal(meal.name);
+
+  document
+    .querySelectorAll(".meal-card")
+    .forEach(card => {
+      card.classList.remove("highlight");
+    });
+
+  div.classList.add("highlight");
+});
+
     div.innerHTML = `
       <div class="meal-title">
         ${meal.name}
@@ -55,7 +68,7 @@ document
 
     saveLastMeal(randomMeal.name);
 
-    alert(`Today's meal: ${randomMeal.name}`);
+    
 });
 
 loadMeals();
@@ -69,7 +82,7 @@ document
     );
 
     if (easyMeals.length === 0) {
-      alert("No easy meals 😭");
+      
       return;
     }
 
@@ -78,8 +91,6 @@ document
         Math.floor(Math.random() * easyMeals.length)
       ];
     saveLastMeal(randomMeal.name);
-
-    alert(`😴 Easy meal: ${randomMeal.name}`);
 });
 
 function saveLastMeal(mealName) {
@@ -89,12 +100,13 @@ function saveLastMeal(mealName) {
     mealName
   );
 
-  displayLastMeal();
+  displayLastMeal(mealName);
 }
 
-function displayLastMeal() {
+function displayLastMeal(mealName = null) {
 
   const lastMeal =
+    mealName ||
     localStorage.getItem("lastMeal");
 
   const div =
