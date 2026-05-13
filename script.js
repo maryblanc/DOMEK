@@ -283,13 +283,17 @@ function displayWeeklyPlanner() {
       "weeklyPlanner"
     );
 
-const plan = {};
+  const plan = {};
 
-mealPlan.forEach(item => {
+  mealPlan.forEach(item => {
 
-  plan[item.day.trim()] =
-    item.meal;
-});
+    plan[item.day.trim()] = {
+      meal: item.meal,
+      author: item.author,
+      status: item.status
+    };
+
+  });
 
   container.innerHTML = "";
 
@@ -300,7 +304,7 @@ mealPlan.forEach(item => {
 
     div.classList.add("day-card");
 
-    const meal =
+    const mealData =
       plan[day];
 
     div.innerHTML = `
@@ -309,10 +313,22 @@ mealPlan.forEach(item => {
       </div>
 
       ${
-        meal
+        mealData
           ? `
             <div class="day-meal">
-              🍽 ${meal}
+              🍽 ${mealData.meal}
+            </div>
+
+            <div class="meal-author">
+              👤 ${mealData.author}
+            </div>
+
+            <div class="meal-status">
+              ${
+                mealData.status === "cooked"
+                  ? "✅ Cooked"
+                  : "🕒 Planned"
+              }
             </div>
           `
           : `
@@ -324,6 +340,7 @@ mealPlan.forEach(item => {
     `;
 
     div.addEventListener("click", () => {
+
       const mealOptions =
         meals.map(meal =>
           meal.name
@@ -341,13 +358,13 @@ mealPlan.forEach(item => {
         day,
         mealName
       );
-     
+
     });
 
     container.appendChild(div);
+
   });
 }
-
 
 async function saveMealPlan(
   day,
