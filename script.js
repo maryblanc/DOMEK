@@ -250,6 +250,10 @@ function generateAnotherMeal() {
   const availableMeals =
   getAvailableMeals();
 
+  if (availableMeals.length === 0) {
+  return;
+}
+
   const randomMeal =
     availableMeals[
       Math.floor(Math.random() * availableMeals.length)
@@ -336,8 +340,11 @@ mealPlan.forEach(item => {
 }
 
 
-displayLastMeal();
+window.addEventListener("DOMContentLoaded", () => {
 
-loadMealPlan();
+  displayLastMeal();
 
-loadMeals();
+  loadMealPlan();
+
+  loadMeals();
+});
