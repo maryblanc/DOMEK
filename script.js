@@ -324,21 +324,55 @@ mealPlan.forEach(item => {
     `;
 
     div.addEventListener("click", () => {
+      const mealOptions =
+        meals.map(meal =>
+          meal.name
+        );
 
       const mealName =
         prompt(
-          `Meal for ${day}:`
+          `Meal for ${day}:\n\n` +
+          mealOptions.join("\n")
         );
 
       if (!mealName) return;
 
-      displayWeeklyPlanner();
+      saveMealPlan(
+        day,
+        mealName
+      );
+     
     });
 
     container.appendChild(div);
   });
 }
 
+
+async function saveMealPlan(
+  day,
+  meal,
+  author = "Marysia"
+) {
+
+  await fetch(API_URL, {
+
+    method: "POST",
+
+     headers: {
+    "Content-Type": "application/json"
+  },
+
+
+    body: JSON.stringify({
+      day: day,
+      meal: meal,
+      author: author
+    })
+  });
+
+  loadMealPlan();
+}
 
 window.addEventListener("DOMContentLoaded", () => {
 
