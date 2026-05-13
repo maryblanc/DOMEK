@@ -78,9 +78,13 @@ document
   .getElementById("easyBtn")
   .addEventListener("click", () => {
 
-    const easyMeals = meals.filter(meal =>
-      Number(meal.effort) <= 2
-    );
+    const availableMeals =
+      getAvailableMeals();
+    
+    const easyMeals =
+      availableMeals.filter(meal =>
+        Number(meal.effort) <= 2
+      );
 
     if (easyMeals.length === 0) {
       return;
@@ -96,10 +100,24 @@ document
 
 function saveLastMeal(mealName) {
 
-  localStorage.setItem(
-    "lastMeal",
-    mealName
-  );
+  let recentMeals =
+  JSON.parse(
+    localStorage.getItem("recentMeals")
+  ) || [];
+
+recentMeals.unshift(mealName);
+
+recentMeals = recentMeals.slice(0, 3);
+
+localStorage.setItem(
+  "recentMeals",
+  JSON.stringify(recentMeals)
+);
+
+localStorage.setItem(
+  "lastMeal",
+  mealName
+);
 
   displayLastMeal(mealName);
 }
@@ -122,6 +140,25 @@ function displayLastMeal(mealName = null) {
       </div>
     `;
   }
+}
+
+function getAvailableMeals() {
+
+  const recentMeals =
+    JSON.parse(
+      localStorage.getItem("recentMeals")
+    ) || [];
+
+  const filteredMeals =
+    meals.filter(meal =>
+      !recentMeals.includes(meal.name)
+    );
+
+  if (filteredMeals.length === 0) {
+    return meals;
+  }
+
+  return filteredMeals;
 }
 
 function showSuggestion(meal) {
@@ -177,9 +214,12 @@ function acceptMeal(mealName) {
 
 function generateAnotherMeal() {
 
+  const availableMeals =
+  getAvailableMeals();
+
   const randomMeal =
-    meals[
-      Math.floor(Math.random() * meals.length)
+    availableMeals[
+      Math.floor(Math.random() * availableMeals.length)
     ];
 
   showSuggestion(randomMeal);
