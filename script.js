@@ -191,9 +191,9 @@ function showSuggestion(meal) {
 
       <div class="suggestion-buttons">
 
-       <button
-        class="accept-btn"
-        onclick='acceptMeal("${meal.name}")'
+        <button
+          class="accept-btn"
+          onclick='acceptMeal("${meal.name}")'
         >
           ✅ Accept
         </button>
@@ -203,6 +203,56 @@ function showSuggestion(meal) {
           onclick="generateAnotherMeal()"
         >
           🔄 Another
+        </button>
+
+      </div>
+
+      <div style="margin-top: 15px;">
+
+        <select id="daySelect">
+
+          <option value="Today">
+            Today
+          </option>
+
+          <option value="Tomorrow">
+            Tomorrow
+          </option>
+
+          <option value="Monday">
+            Monday
+          </option>
+
+          <option value="Tuesday">
+            Tuesday
+          </option>
+
+          <option value="Wednesday">
+            Wednesday
+          </option>
+
+          <option value="Thursday">
+            Thursday
+          </option>
+
+          <option value="Friday">
+            Friday
+          </option>
+
+          <option value="Saturday">
+            Saturday
+          </option>
+
+          <option value="Sunday">
+            Sunday
+          </option>
+
+        </select>
+
+        <button
+          onclick='planMeal("${meal.name}")'
+        >
+          📅 Add to plan
         </button>
 
       </div>
@@ -235,6 +285,90 @@ function generateAnotherMeal() {
   showSuggestion(randomMeal);
 }
 
-displayLastMeal();
+function planMeal(mealName) {
 
+  const plan =
+    JSON.parse(
+      localStorage.getItem("mealPlan")
+    ) || [];
+
+  const selectedDay =
+    document.getElementById("daySelect").value;
+
+  plan.unshift({
+    meal: mealName,
+    day: selectedDay,
+    cooked: false
+  });
+
+  localStorage.setItem(
+    "mealPlan",
+    JSON.stringify(plan)
+  );
+
+  displayMealPlan();
+}
+
+function displayMealPlan() {
+
+  const plan =
+    JSON.parse(
+      localStorage.getItem("mealPlan")
+    ) || [];
+
+  const container =
+    document.getElementById("mealPlan");
+
+  container.innerHTML = "";
+
+  plan.forEach((item, index) => {
+
+    const div =
+      document.createElement("div");
+
+    div.classList.add("meal-card");
+
+    div.innerHTML = `
+      <div class="meal-title">
+        ${item.meal}
+      </div>
+
+      <p>
+        📅 ${item.day}
+      </p>
+
+      <p>
+        ${item.cooked ? "✅ Cooked" : "🕒 Planned"}
+      </p>
+
+      <button onclick="toggleCooked(${index})">
+        ${item.cooked ? "Undo" : "Mark cooked"}
+      </button>
+    `;
+
+    container.appendChild(div);
+  });
+}
+
+function toggleCooked(index) {
+
+  const plan =
+    JSON.parse(
+      localStorage.getItem("mealPlan")
+    ) || [];
+
+  plan[index].cooked =
+    !plan[index].cooked;
+
+  localStorage.setItem(
+    "mealPlan",
+    JSON.stringify(plan)
+  );
+
+  displayMealPlan();
+}
+
+
+displayLastMeal();
+displayMealPlan();
 loadMeals();
