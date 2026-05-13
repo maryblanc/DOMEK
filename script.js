@@ -66,7 +66,8 @@ document
     const randomMeal =
       meals[Math.floor(Math.random() * meals.length)];
 
-    saveLastMeal(randomMeal.name);
+    showSuggestion(randomMeal);
+});
 
     
 });
@@ -123,4 +124,65 @@ function displayLastMeal(mealName = null) {
   }
 }
 
+function showSuggestion(meal) {
+
+  const box =
+    document.getElementById("suggestionBox");
+
+  box.innerHTML = `
+    <div class="meal-card highlight">
+
+      <h2>🎲 Suggested Meal</h2>
+
+      <div class="meal-title">
+        ${meal.name}
+      </div>
+
+      <p>
+        ⏱ ${meal.cook_time} min
+      </p>
+
+      <div class="suggestion-buttons">
+
+        <button
+          class="accept-btn"
+          onclick="acceptMeal('${meal.name}')"
+        >
+          ✅ Accept
+        </button>
+
+        <button
+          class="reject-btn"
+          onclick="generateAnotherMeal()"
+        >
+          🔄 Another
+        </button>
+
+      </div>
+
+    </div>
+  `;
+}
+
+function acceptMeal(mealName) {
+
+  saveLastMeal(mealName);
+
+  displayMeals(meals);
+
+  displayLastMeal();
+
+  document
+    .getElementById("suggestionBox")
+    .innerHTML = "";
+}
+function generateAnotherMeal() {
+
+  const randomMeal =
+    meals[
+      Math.floor(Math.random() * meals.length)
+    ];
+
+  showSuggestion(randomMeal);
+}
 displayLastMeal();
