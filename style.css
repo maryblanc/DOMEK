@@ -117,3 +117,46 @@ button {
   text-decoration: none;
   font-size: 14px;
 }
+
+
+#weeklyPlanner {
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, 1fr);
+
+  gap: 16px;
+
+  margin-bottom: 30px;
+}
+
+.day-card {
+
+  background: #1f2937;
+
+  border-radius: 18px;
+
+  padding: 16px;
+
+  min-height: 120px;
+}
+
+.day-name {
+
+  font-size: 18px;
+
+  font-weight: bold;
+
+  margin-bottom: 12px;
+}
+
+.empty-day {
+
+  opacity: 0.5;
+}
+
+.day-meal {
+
+  margin-top: 10px;
+}

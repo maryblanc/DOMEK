@@ -24,15 +24,25 @@ async function loadMeals() {
 
 async function loadMealPlan() {
 
-  const response =
-    await fetch(
-      API_URL + "?type=mealPlan"
-    );
+  try {
 
-  mealPlan =
-    await response.json();
+    const response =
+      await fetch(
+        API_URL + "?type=mealPlan"
+      );
 
-  displayWeeklyPlanner();
+    mealPlan =
+      await response.json();
+
+    console.log("MealPlan:");
+    console.log(mealPlan);
+
+    displayWeeklyPlanner();
+
+  } catch(error) {
+
+    console.error(error);
+  }
 }
 
 function displayMeals(meals) {
