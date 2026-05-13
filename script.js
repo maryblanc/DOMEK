@@ -16,6 +16,9 @@ function displayMeals(meals) {
   const container =
     document.getElementById("mealContainer");
 
+  const selectedMeal =
+    localStorage.getItem("lastMeal");
+
   container.innerHTML = "";
 
   meals.forEach(meal => {
@@ -24,18 +27,16 @@ function displayMeals(meals) {
 
     div.classList.add("meal-card");
 
+    if (meal.name === selectedMeal) {
+      div.classList.add("highlight");
+    }
+
     div.addEventListener("click", () => {
 
-  saveLastMeal(meal.name);
+      saveLastMeal(meal.name);
 
-  document
-    .querySelectorAll(".meal-card")
-    .forEach(card => {
-      card.classList.remove("highlight");
+      displayMeals(meals);
     });
-
-  div.classList.add("highlight");
-});
 
     div.innerHTML = `
       <div class="meal-title">
@@ -45,6 +46,7 @@ function displayMeals(meals) {
       <p>⏱ Cook time: ${meal.cook_time || "?"} min</p>
 
       <div class="tags">
+
         <div class="tag">
           💪 Effort: ${meal.effort || "?"}
         </div>
@@ -52,6 +54,7 @@ function displayMeals(meals) {
         <div class="tag">
           🧼 Cleanup: ${meal.cleanup || "?"}
         </div>
+
       </div>
     `;
 
@@ -64,15 +67,12 @@ document
   .addEventListener("click", () => {
 
     const randomMeal =
-      meals[Math.floor(Math.random() * meals.length)];
+      meals[
+        Math.floor(Math.random() * meals.length)
+      ];
 
     showSuggestion(randomMeal);
 });
-
-    
-});
-
-loadMeals();
 
 document
   .getElementById("easyBtn")
@@ -83,7 +83,6 @@ document
     );
 
     if (easyMeals.length === 0) {
-      
       return;
     }
 
@@ -91,7 +90,8 @@ document
       easyMeals[
         Math.floor(Math.random() * easyMeals.length)
       ];
-    saveLastMeal(randomMeal.name);
+
+    showSuggestion(randomMeal);
 });
 
 function saveLastMeal(mealName) {
@@ -170,12 +170,11 @@ function acceptMeal(mealName) {
 
   displayMeals(meals);
 
-  displayLastMeal();
-
   document
     .getElementById("suggestionBox")
     .innerHTML = "";
 }
+
 function generateAnotherMeal() {
 
   const randomMeal =
@@ -185,4 +184,7 @@ function generateAnotherMeal() {
 
   showSuggestion(randomMeal);
 }
+
 displayLastMeal();
+
+loadMeals();
