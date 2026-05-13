@@ -70,3 +70,29 @@ button:hover {
 .highlight {
   border: 2px solid #3b82f6;
 }
+
+#suggestionBox {
+  margin-bottom: 20px;
+}
+
+.suggestion-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.reject-btn {
+  background: #dc2626;
+}
+
+.reject-btn:hover {
+  background: #b91c1c;
+}
+
+.accept-btn {
+  background: #16a34a;
+}
+
+.accept-btn:hover {
+  background: #15803d;
+}
