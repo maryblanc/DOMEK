@@ -53,6 +53,8 @@ document
     const randomMeal =
       meals[Math.floor(Math.random() * meals.length)];
 
+    saveLastMeal(randomMeal.name);
+
     alert(`Today's meal: ${randomMeal.name}`);
 });
 
@@ -75,6 +77,38 @@ document
       easyMeals[
         Math.floor(Math.random() * easyMeals.length)
       ];
+    saveLastMeal(randomMeal.name);
 
     alert(`😴 Easy meal: ${randomMeal.name}`);
 });
+
+function saveLastMeal(mealName) {
+
+  localStorage.setItem(
+    "lastMeal",
+    mealName
+  );
+
+  displayLastMeal();
+}
+
+function displayLastMeal() {
+
+  const lastMeal =
+    localStorage.getItem("lastMeal");
+
+  const div =
+    document.getElementById("lastMeal");
+
+  if (lastMeal) {
+
+    div.innerHTML = `
+      <div class="meal-card highlight">
+        ⭐ Last chosen meal:
+        <strong>${lastMeal}</strong>
+      </div>
+    `;
+  }
+}
+
+displayLastMeal();
