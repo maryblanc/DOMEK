@@ -144,9 +144,9 @@ function showSuggestion(meal) {
 
       <div class="suggestion-buttons">
 
-        <button
-          class="accept-btn"
-          onclick="acceptMeal('${meal.name}')"
+       <button
+        class="accept-btn"
+        onclick='acceptMeal("${meal.name}")'
         >
           ✅ Accept
         </button>
