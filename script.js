@@ -12,6 +12,8 @@ const API_URL = "https://script.google.com/macros/s/AKfycbyLy0j_KoMuYpwAbksd5V9G
 
 let meals = [];
 
+let mealPlan = [];
+
 async function loadMeals() {
 
   const response = await fetch(API_URL);
@@ -19,6 +21,19 @@ async function loadMeals() {
   meals = await response.json();
 
   displayMeals(meals);
+}
+
+async function loadMealPlan() {
+
+  const response =
+    await fetch(
+      API_URL + "?type=mealPlan"
+    );
+
+  mealPlan =
+    await response.json();
+
+  displayWeeklyPlanner();
 }
 
 function displayMeals(meals) {
@@ -206,57 +221,6 @@ function showSuggestion(meal) {
         </button>
 
       </div>
-
-      <div style="margin-top: 15px;">
-
-        <select id="daySelect">
-
-          <option value="Today">
-            Today
-          </option>
-
-          <option value="Tomorrow">
-            Tomorrow
-          </option>
-
-          <option value="Monday">
-            Monday
-          </option>
-
-          <option value="Tuesday">
-            Tuesday
-          </option>
-
-          <option value="Wednesday">
-            Wednesday
-          </option>
-
-          <option value="Thursday">
-            Thursday
-          </option>
-
-          <option value="Friday">
-            Friday
-          </option>
-
-          <option value="Saturday">
-            Saturday
-          </option>
-
-          <option value="Sunday">
-            Sunday
-          </option>
-
-        </select>
-
-        <button
-          onclick='planMeal("${meal.name}")'
-        >
-          📅 Add to plan
-        </button>
-
-      </div>
-
     </div>
   `;
 }
@@ -306,10 +270,13 @@ function displayWeeklyPlanner() {
       "weeklyPlanner"
     );
 
-  const plan =
-    JSON.parse(
-      localStorage.getItem("mealPlan")
-    ) || {};
+const plan = {};
+
+mealPlan.forEach(item => {
+
+  plan[item.day.trim()] =
+    item.meal;
+});
 
   container.innerHTML = "";
 
@@ -354,10 +321,7 @@ function displayWeeklyPlanner() {
 
       plan[day] = mealName;
 
-      localStorage.setItem(
-        "mealPlan",
-        JSON.stringify(plan)
-      );
+      
 
       displayWeeklyPlanner();
     });
@@ -368,5 +332,7 @@ function displayWeeklyPlanner() {
 
 
 displayLastMeal();
-displayWeeklyPlanner();
+
+loadMealPlan();
+
 loadMeals();
