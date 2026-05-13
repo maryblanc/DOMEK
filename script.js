@@ -1,4 +1,4 @@
-const API_URL = https:"//script.google.com/macros/s/AKfycbw3iqfAISyny6x3z93j3-yQlLwLgsKw1Lyv2gJIfRB6TA1MFHrsawRD-71Kf1nVOmub1g/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbw3iqfAISyny6x3z93j3-yQlLwLgsKw1Lyv2gJIfRB6TA1MFHrsawRD-71Kf1nVOmub1g/exec";
 
 let meals = [];
 
