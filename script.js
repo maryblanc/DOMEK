@@ -22,11 +22,24 @@ function displayMeals(meals) {
 
     const div = document.createElement("div");
 
+    div.classList.add("meal-card");
+
     div.innerHTML = `
-      <h3>${meal.name}</h3>
-      <p>Cook time: ${meal.cook_time} min</p>
-      <p>Effort: ${meal.effort}</p>
-      <hr>
+      <div class="meal-title">
+        ${meal.name}
+      </div>
+
+      <p>⏱ Cook time: ${meal.cook_time || "?"} min</p>
+
+      <div class="tags">
+        <div class="tag">
+          💪 Effort: ${meal.effort || "?"}
+        </div>
+
+        <div class="tag">
+          🧼 Cleanup: ${meal.cleanup || "?"}
+        </div>
+      </div>
     `;
 
     container.appendChild(div);
