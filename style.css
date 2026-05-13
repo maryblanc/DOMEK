@@ -160,3 +160,46 @@ button {
 
   margin-top: 10px;
 }
+
+
+.planner-modal {
+
+  position: fixed;
+  inset: 0;
+
+  background: rgba(0,0,0,0.7);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 999;
+}
+
+.planner-content {
+
+  background: #1f2937;
+
+  padding: 25px;
+
+  border-radius: 20px;
+
+  width: 90%;
+  max-width: 400px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.hidden {
+  display: none;
+}
+
+.planner-content select,
+.planner-content button {
+
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+}

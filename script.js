@@ -13,6 +13,8 @@ let meals = [];
 
 let mealPlan = [];
 
+let selectedDay = null;
+
 async function loadMeals() {
 
   const response = await fetch(API_URL);
@@ -154,6 +156,38 @@ localStorage.setItem(
 );
 
   displayLastMeal(mealName);
+}
+
+
+function openPlannerModal(day) {
+
+  selectedDay = day;
+
+  document
+    .getElementById("plannerDayTitle")
+    .innerText =
+      `Meal for ${day}`;
+
+  const mealSelect =
+    document.getElementById("mealSelect");
+
+  mealSelect.innerHTML = "";
+
+  meals.forEach(meal => {
+
+    const option =
+      document.createElement("option");
+
+    option.value = meal.name;
+    option.textContent = meal.name;
+
+    mealSelect.appendChild(option);
+
+  });
+
+  document
+    .getElementById("plannerModal")
+    .classList.remove("hidden");
 }
 
 function displayLastMeal(mealName = null) {
@@ -341,23 +375,7 @@ function displayWeeklyPlanner() {
 
     div.addEventListener("click", () => {
 
-      const mealOptions =
-        meals.map(meal =>
-          meal.name
-        );
-
-      const mealName =
-        prompt(
-          `Meal for ${day}:\n\n` +
-          mealOptions.join("\n")
-        );
-
-      if (!mealName) return;
-
-      saveMealPlan(
-        day,
-        mealName
-      );
+      openPlannerModal(day);
 
     });
 
@@ -390,6 +408,28 @@ async function saveMealPlan(
 
   loadMealPlan();
 }
+
+document
+  .getElementById("savePlanBtn")
+  .addEventListener("click", () => {
+
+    const meal =
+      document.getElementById("mealSelect").value;
+
+    const author =
+      document.getElementById("authorSelect").value;
+
+    saveMealPlan(
+      selectedDay,
+      meal,
+      author
+    );
+
+    document
+      .getElementById("plannerModal")
+      .classList.add("hidden");
+});
+
 
 window.addEventListener("DOMContentLoaded", () => {
 
