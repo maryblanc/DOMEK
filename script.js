@@ -8,7 +8,7 @@
 // - NFC integration
 
 
-const API_URL = "https://script.google.com/macros/s/AKfycbyLy0j_KoMuYpwAbksd5V9GEiUcCT8KBKcY13wWNDt7SSiprcDaIuVD-EJw2nKpnuaCqA/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbw0OucTX1v2nnW9XuWlQLQeOU-tZ2Y55-mmX32FoSROlM9zINY9DPi6hxqIQgVLEGGBNQ/exec";
 
 let meals = [];
 
