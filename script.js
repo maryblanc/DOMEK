@@ -285,90 +285,88 @@ function generateAnotherMeal() {
   showSuggestion(randomMeal);
 }
 
-function planMeal(mealName) {
 
-  const plan =
-    JSON.parse(
-      localStorage.getItem("mealPlan")
-    ) || [];
 
-  const selectedDay =
-    document.getElementById("daySelect").value;
 
-  plan.unshift({
-    meal: mealName,
-    day: selectedDay,
-    cooked: false
-  });
 
-  localStorage.setItem(
-    "mealPlan",
-    JSON.stringify(plan)
-  );
+const DAYS = [
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+  "Sunday"
+];
 
-  displayMealPlan();
-}
-
-function displayMealPlan() {
-
-  const plan =
-    JSON.parse(
-      localStorage.getItem("mealPlan")
-    ) || [];
+function displayWeeklyPlanner() {
 
   const container =
-    document.getElementById("mealPlan");
+    document.getElementById(
+      "weeklyPlanner"
+    );
+
+  const plan =
+    JSON.parse(
+      localStorage.getItem("mealPlan")
+    ) || {};
 
   container.innerHTML = "";
 
-  plan.forEach((item, index) => {
+  DAYS.forEach(day => {
 
     const div =
       document.createElement("div");
 
-    div.classList.add("meal-card");
+    div.classList.add("day-card");
+
+    const meal =
+      plan[day];
 
     div.innerHTML = `
-      <div class="meal-title">
-        ${item.meal}
+      <div class="day-name">
+        ${day}
       </div>
 
-      <p>
-        📅 ${item.day}
-      </p>
-
-      <p>
-        ${item.cooked ? "✅ Cooked" : "🕒 Planned"}
-      </p>
-
-      <button onclick="toggleCooked(${index})">
-        ${item.cooked ? "Undo" : "Mark cooked"}
-      </button>
+      ${
+        meal
+          ? `
+            <div class="day-meal">
+              🍽 ${meal}
+            </div>
+          `
+          : `
+            <div class="empty-day">
+              No meal planned
+            </div>
+          `
+      }
     `;
+
+    div.addEventListener("click", () => {
+
+      const mealName =
+        prompt(
+          `Meal for ${day}:`
+        );
+
+      if (!mealName) return;
+
+      plan[day] = mealName;
+
+      localStorage.setItem(
+        "mealPlan",
+        JSON.stringify(plan)
+      );
+
+      displayWeeklyPlanner();
+    });
 
     container.appendChild(div);
   });
 }
 
-function toggleCooked(index) {
-
-  const plan =
-    JSON.parse(
-      localStorage.getItem("mealPlan")
-    ) || [];
-
-  plan[index].cooked =
-    !plan[index].cooked;
-
-  localStorage.setItem(
-    "mealPlan",
-    JSON.stringify(plan)
-  );
-
-  displayMealPlan();
-}
-
 
 displayLastMeal();
-displayMealPlan();
+displayWeeklyPlanner();
 loadMeals();
