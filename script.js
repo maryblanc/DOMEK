@@ -1,3 +1,13 @@
+// TODO:
+// - ratings
+// - recent history in Sheets
+// - avoid disliked foods
+// - weighted recommendations
+// - Telegram reminders
+// - chores system
+// - NFC integration
+
+
 const API_URL = "https://script.google.com/macros/s/AKfycbyLy0j_KoMuYpwAbksd5V9GEiUcCT8KBKcY13wWNDt7SSiprcDaIuVD-EJw2nKpnuaCqA/exec";
 
 let meals = [];
