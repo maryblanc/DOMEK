@@ -57,3 +57,24 @@ document
 });
 
 loadMeals();
+
+document
+  .getElementById("easyBtn")
+  .addEventListener("click", () => {
+
+    const easyMeals = meals.filter(meal =>
+      Number(meal.effort) <= 2
+    );
+
+    if (easyMeals.length === 0) {
+      alert("No easy meals 😭");
+      return;
+    }
+
+    const randomMeal =
+      easyMeals[
+        Math.floor(Math.random() * easyMeals.length)
+      ];
+
+    alert(`😴 Easy meal: ${randomMeal.name}`);
+});
