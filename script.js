@@ -8,8 +8,7 @@
 // - NFC integration
 
 
-const API_URL = "https://script.google.com/macros/s/AKfycbyLy0j_KoMuYpwAbksd5V9GEiUcCT8KBKcY13wWNDt7SSiprcDaIuVD-EJw2nKpnuaCqA/exec";
-
+const API_URL = "https://script.google.com/macros/s/AKfycbx8XOCVqS_i9gvyvEgqUd3V1CwGCOIPQS34R5C2euHmSKPKe1b1GfBaxHE3HSWU1mINEQ/exec";
 let meals = [];
 
 let mealPlan = [];
@@ -318,10 +317,6 @@ mealPlan.forEach(item => {
         );
 
       if (!mealName) return;
-
-      plan[day] = mealName;
-
-      
 
       displayWeeklyPlanner();
     });
